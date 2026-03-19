@@ -1,0 +1,60 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="{% static 'flights/css/indexpagestyle.css' %}">
+</head>
+<body>
+     <div>
+        <div class="container">
+            <h1>Welcome to the Airline Reservation System</h1>
+            <a href="{% url 'managebooking' %}">Manage Booking</a>
+            <h3>Available Flights</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Duration</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>                
+                    {% for i in flights%}
+                        <tr>
+                            <th><a class="ainc" href="{% url 'airport' i.origin.code %}">{{ i.origin}}</a></th>
+                            <th><a class="ainc" href="{% url 'airport' i.destination.code %}">{{ i.destination}}</a></th>
+                            <th>{{i.duration}}</th>
+                            <th><a class="ainc" href="{% url 'details' i.id %}">detail view</a></th>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+     </div>
+     
+     <div>
+        <div class="container">
+            <h3>Airports</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>City</th>
+                    </tr>
+                    {% for i in airports%}
+                        <tr>
+                            <th>{{ i.code}}</th>
+                            <th><a class="ainc" href="{% url 'airport' i.code %}">{{ i.city}}</a></th>
+                        </tr>
+                    {% endfor %}
+                </thead>
+            </table>
+        </div>
+     </div>
+</body>
+</html>

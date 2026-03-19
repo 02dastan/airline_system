@@ -1,0 +1,3 @@
+-- database: d:\VsCOde\.vscode\Django_S\airline_system\db.sqlite3
+
+SELECT * FROM auth_user;

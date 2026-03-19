@@ -1,0 +1,35 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'flights/css/manage.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ info.origin }} to {{ info.destination }}</h1>
+        <h3>Duration: {{info.duration}}min | Available seats:{{ length }}</h3>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                <label>Name:</label>
+                <input type="text" name="name" required placeholder="Your full name">
+                <label>Email:</label>
+                <input type="text" name="email" required placeholder="Your email">
+            </div>
+            <div class = "btn-center">
+                {% if  length > 0 %}
+                    <button class type="submit"><a>Book</a></button>
+                {% else %}
+                    <button type="button" disabled style="background-color: gray;">No Seats Available
+                    </button>
+                {%  endif %}
+            </div>
+            <a href="{% url 'details' info.id %}">Back to Details</a>
+        </form>
+    
+    </div>
+
+</body>
+</html>

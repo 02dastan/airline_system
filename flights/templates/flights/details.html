@@ -1,0 +1,22 @@
+{% load static %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'flights/css/detailsstyle.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>{{ info.origin}} to {{info.destination}} - {{info.duration }}</h1>
+        <h1>Available Seats: {{ length }}</h1>
+        <h1>Passengers: </h1>
+        {% for i in info3 %}
+            <h1>{{ i.passenger.name }} - {{ i.passenger.email }}</h1>
+        {% endfor %}
+        
+        <button><a href="{% url 'booking' info.id %}">Booking this Flight</a></button>
+        <button><a href="{% url 'allFlights' %}">Back to all Flights</a></button>
+    </div>
+</body>
+</html>

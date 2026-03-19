@@ -1,0 +1,99 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container {
+    background: white;
+    padding: 40px 60px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s ease;
+    margin: 20px;
+    max-width: 800px;
+    width: 100%;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+h1 {
+    font-size: 24px;
+    color: #2c3e50;
+    margin: 15px 0;
+    border-bottom: 2px solid #f0f2f5;
+    padding-bottom: 10px;
+}
+
+h1:first-of-type {
+    color: #00b894;
+    font-size: 28px;
+    border-bottom: 3px solid #00b894;
+}
+
+button {
+    padding: 0;
+    background: transparent;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+}
+
+button a {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #00b894;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+button a:hover {
+    background: white;
+    color: #00b894;
+    border-color: #00b894;
+    transform: translateY(-2px);
+}
+
+button:last-of-type a {
+    background: #95a5a6;
+}
+
+button:last-of-type a:hover {
+    background: white;
+    color: #95a5a6;
+    border-color: #95a5a6;
+}
+
+h1:nth-of-type(3) {
+    margin-top: 30px;
+    color: #2c3e50;
+    font-size: 22px;
+}
+
+h1:nth-of-type(n+4) {
+    font-size: 18px;
+    color: #555;
+    border-bottom: 1px dashed #e0e0e0;
+    padding: 8px 0;
+    margin: 5px 0;
+}

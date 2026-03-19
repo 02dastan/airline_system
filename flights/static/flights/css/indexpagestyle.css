@@ -1,0 +1,118 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.container {
+    background: white;
+    padding: 40px 60px;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    text-align: center;
+    animation: fadeIn 0.5s ease;
+    margin: 20px;
+    max-width: 1200px; 
+    width: 100%;
+}
+
+.ainc {
+    color: rgb(5, 85, 135);
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.ainc:hover {
+    color: #00b894;  
+    text-decoration: underline;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    color: #00b894;
+    font-size: 48px;
+    margin: 0 0 20px 0;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+h3 {
+    color: #2c3e50;
+    margin: 20px 0;
+}
+
+p {
+    color: #636e72;
+    font-size: 18px;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+th {
+    font-weight: normal;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+.btn, a[href*="managebooking"] {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #00b894;
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: all 0.3s;
+    border: 2px solid transparent;
+    margin: 10px 0;
+}
+
+.btn:hover, a[href*="managebooking"]:hover {
+    background: white;
+    color: #00b894;
+    border-color: #00b894;
+    transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 32px;
+    }
+    
+    table {
+        font-size: 14px;
+    }
+    
+    th, td {
+        padding: 8px;
+    }
+}

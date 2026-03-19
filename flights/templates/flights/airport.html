@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>{{airport}}</h1>
+    <h3>Departures</h3>
+    {% for i in departures%}
+        <h4>From {{ i.destination }}{{i.duration}}<a href="{% url 'details' i.id %}">detail view</a></h4>
+    {% endfor %}
+    <h3>Departures</h3>
+    {% for i in arrivals%}
+        <h4>To {{ i.origin }}{{ i.duration}}<a href="{% url 'details' i.id %}">detail view</a></h4>
+    {% endfor %}
+ </body>
+</html>
