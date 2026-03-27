@@ -1,27 +1,40 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'flights/css/confirm.css' %}">
 </head>
 <body>
-    <div>
-        <h1>Booking Confirmed</h1>
-        <h3>Your booking code is:</h3>
-        <h2>{{ booking.booking_code }}</h2>
-        <h3>Please save this code to manage your booking.</h3>
-        <button><a href="{% url 'allFlights' %}">Return to Homepage</a></button>   
-    </div>
-    <div>
-        <h1>Booking Details: {{booking.booking_code}}</h1>
-        <h2>Passenger: {{booking.passenger.name}}</h2>
-        <h2>Email: {{booking.passenger.email}}</h2>
-        <h2>Flight: {{booking.flight.origin}} to {{booking.flight.destination}}</h2>
-        <h2>Duration: {{booking.flight.duration}}</h2>
-        <h2>Booking Code: {{booking.booking_code}}</h2>
-        <button><a href="{% url 'allFlights' %}">Return to Homepage</a></button>
-        
+    <div class="container">
+        {% if booking %}
+            <div class="booking-card">
+                <h1>Booking Confirmed</h1>
+                <section>
+                    <h3>Booking Code: <strong>{{ booking.booking_code}}</strong>
+                        <p>Please save this code to manage your booking later.</p>
+                </section>
+                <hr>
+                <section class="details">
+                    <h2>Flight Details</h2>
+                    <ul>
+                        <li><strong>Passenger: </strong>{{booking.passenger.name}}</li>
+                        <li><strong>Email: <strong>{{booking.passenger.email}}</li>
+                        <li><strong>Route: <strong>{{ booking.flight.origin}} -> {{booking.flight.destination}}</li>
+                        <li><strong>Duration: <strong>{{ booking.flight.duration}} min</li>
+                    </ul>
+                </section>
+            <a href="{% url 'allFlights' %}" class="btn">Return to Homepage</a>
+            </div>
+        {% else %}
+            <div class="error">
+                <h1>Error</h1>            
+                <p>Booking information not found</p>
+                <a href="{% url 'allFlights' %}" class="btn">Go Back</a>
+            </div>
+        {% endif %}
     </div>
 </body>
 </html>

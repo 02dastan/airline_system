@@ -3,5 +3,5 @@ venv/
 __pycache__/
 db.sqlite3
 .vscode/
-# ПУТЬ К ТВОЕМУ JSON КЛЮЧУ FIREBASE (чтобы никто не украл доступ)
 serviceAccountKey.json
+admin.txt

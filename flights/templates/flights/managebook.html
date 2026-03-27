@@ -1,39 +1,49 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'flights/css/managebooking.css' %}">
 </head>
 <body>
-    <form method="post" action="{% url 'managebooking' %}">
-        {% csrf_token %}
-        <h1>Manage Your Booking</h1>
-        <h3>Booking Code:
-            <input type="text" name="code" placeholder="Enter your booking code" value="{{ request.POST.code}}">
-        </h3>
-        <button type="submit" class="btn">Find Booking</button>
-    </form>
-    {% if error %}
-        <p style="color: red;">{{ error}}</p>
-    {% endif %}
+    <div class="container">
+        <form method="post" action="{% url 'managebooking' %}">
+            {% csrf_token %}
+            <h1 class="text">Manage Your Booking</h1>
+            <h3 class="text">Booking Code:
+                <input type="text" name="code" placeholder="Enter your booking code" value="{{ request.POST.code}}">
+            </h3>
+            <button type="submit" class="btn">Find Booking</button>
+            <a href="{% url 'allFlights' %}" class="btn" style="color: white; text-decoration: none;">Back to all Flights</a>
+        </form>
+        {% if error %}
+            <div class="overlay">
+                <div class="error-card">
+                    <h1>Error</h1>
+                    <p>{{ error }}</p>
+                    <a href="{% url 'managebooking' %}" class="btn">Try Again</a>
+                </div>
+            </div>
+        {% endif %}
 
-    {% if booking %}
-        <div class="bookingdetails">
-            <h1>Booking Details</h1>
-            <h3>Name: {{booking.passenger.name}}</h3>
-            <h3>Email: {{booking.passenger.email}}</h3>
-            <h3>Flight: {{booking.flight.origin}} -> {{booking.flight.destination}}</h3>
-            <h3>Duration: {{booking.flight.duration}}</h3>
-            <h3>Booking Code: {{booking.booking_code}}</h3>
-            <form method="post" action="{% url 'cancel_booking' booking.booking_code%}">
-                {% csrf_token%}
-                <button type="submit" onclick="return confirm('Are you sure you want to cancel this booking?');">
-                    Cancel Booking
-                    </button>
-        </div>
+        {% if booking %}
+            <div class="bookingdetails">
+                <h1>Booking Details</h1>
+                <h3>Name: {{booking.passenger.name}}</h3>
+                <h3>Email: {{booking.passenger.email}}</h3>
+                <h3>Flight: {{booking.flight.origin}} -> {{booking.flight.destination}}</h3>
+                <h3>Duration: {{booking.flight.duration}}</h3>
+                <h3>Booking Code: {{booking.booking_code}}</h3>
+                <form method="post" action="{% url 'cancel_booking' booking.booking_code %}">
+                    {% csrf_token %}
+                    <button class="btn" type="submit" onclick="return confirm('Are you sure?');">Cancel Booking</button>
+                </form> <a href="{% url 'allFlights' %}" class="btn" style="color: white; text-decoration: none;">Back to all Flights</a>
+            </div>
 
-    {% endif%}
+        {% endif%}
+    </div>
 
 </body>
 </html>

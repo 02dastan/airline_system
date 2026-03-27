@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'flights',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -126,3 +127,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFILES_DIRS = [
     BASE_DIR / 'flights' / 'static',  # или os.path.join(BASE_DIR, 'flights', 'static')
 ]
+
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES":[
+        "rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly"
+    ]
+}

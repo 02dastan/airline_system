@@ -27,8 +27,8 @@
                         <tr>
                             <th><a class="ainc" href="{% url 'airport' i.origin.code %}">{{ i.origin}}</a></th>
                             <th><a class="ainc" href="{% url 'airport' i.destination.code %}">{{ i.destination}}</a></th>
-                            <th>{{i.duration}}</th>
-                            <th><a class="ainc" href="{% url 'details' i.id %}">detail view</a></th>
+                            <th>{{i.duration}} min</th>
+                            <th><a class="ainc" href="{% url 'details' i.id %}">🔍</a></th>
                         </tr>
                     {% endfor %}
                 </tbody>

@@ -1,19 +1,34 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="{% static 'flights/css/airports.css' %}">
 </head>
 <body>
-    <h1>{{airport}}</h1>
-    <h3>Departures</h3>
-    {% for i in departures%}
-        <h4>From {{ i.destination }}{{i.duration}}<a href="{% url 'details' i.id %}">detail view</a></h4>
-    {% endfor %}
-    <h3>Departures</h3>
-    {% for i in arrivals%}
-        <h4>To {{ i.origin }}{{ i.duration}}<a href="{% url 'details' i.id %}">detail view</a></h4>
-    {% endfor %}
+    <div class="firstcol">
+        <h1>
+            {{ code }}
+        </h1>
+        <img src="{% static 'flights/images/'|add:code|add:'.jpg'|lower %}" alt="Photo of {{ code }} Airport" class="img">
+        
+    </div>
+
+    <div>
+        <div class="container">
+            <h1>{{airport}}</h1>
+            <h3>Arrivals</h3>
+            {% for i in arrivals%}
+                <h4>From {{ i.origin }}-{{i.duration}}min<a href="{% url 'details' i.id %}">🔍</a></h4>
+            {% endfor %}
+            <h3>Departures</h3>
+            {% for i in departures%}
+                <h4>To {{ i.destination }}-{{ i.duration}}min<a href="{% url 'details' i.id %}">🔍</a></h4>
+            {% endfor %}
+        </div>
+    </div>
+    <div><button class="btn"><a href="{% url 'allFlights' %}">Return to Homepage</a></button></div>
  </body>
 </html>

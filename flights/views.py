@@ -1,7 +1,10 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from .models import Airport,Flight,Passenger,Booking
 from django.contrib import messages
-# Create your views here.
+from django.core.validators import validate_email
+from django.core.exceptions import ValidationError
+
+
 def shAirports(request):
     airports = Airport.objects.all()
     return render(request,"flights/fAirports.html",{"airports":airports})
@@ -15,32 +18,60 @@ def allFlights(request):
 
 def showdetails(request,flight_id):
     inc1 = get_object_or_404(Flight,pk=flight_id)
-    inc2 = Passenger.objects.all()
     inc3 = inc1.bookings.select_related('passenger').all()
-    return render(request,"flights/details.html",{"info":inc1,"info2":inc2,"info3":inc3,"length":inc1.capacity-len(inc3)})
+    return render(request,"flights/details.html",{"info":inc1,"info3":inc3,"length":inc1.capacity-len(inc3)})
 
 def booking(request,flight_id):
     f = get_object_or_404(Flight,pk=flight_id)
-    inc3 = f.bookings.select_related('passenger').all()
-    if request.method== 'POST':
-        name = request.POST.get('name','')
-        email = request.POST.get('email','')
-        if name and email:
-            passenger = Passenger.objects.create(name=name,email=email)
-            booking = Booking.objects.create(passenger=passenger,flight=f)
-            return redirect('confirmation', booking_code=booking.booking_code)
-    return render(request,"flights/booking.html",{"info":f,"length":f.capacity-len(inc3)})
+    current_count = f.bookings.count()
+    context_error = {
+        "info": f,
+        "length": f.capacity-current_count,
+        "d_code": f.destination.code,
+        "a_code": f.origin.code
+    }
+    if request.method == 'POST':
+        name = request.POST.get('name','').strip()
+        email = request.POST.get('email','').strip()
+
+        if not name or not email:
+            context_error["error"] = "All fields are required"
+            return render(request, 'flights/booking.html', context_error)
+        try:
+            validate_email(email)
+        except ValidationError:
+            context_error["error"]="Please enter a valid email address"
+            return render(request, 'flights/booking.html', context_error)
+        if len(name) < 3:
+            context_error["error"] = "Name must be at least 3 characters"
+            return render(request, 'flights/booking.html', context_error)
+        if Booking.objects.filter(flight=f, passenger__email = email).exists():
+            context_error["error"]="You have already booked a seat on this flight"
+            return render(request, 'flights/booking.html', context_error)
+        if current_count>=f.capacity:
+            context_error["error"] = "No seats available"
+            return render(request,'flights/booking.html',context_error)
+        passenger , created = Passenger.objects.get_or_create(email=email,defaults={'name': name})
+        if not created and passenger.name != name:
+            passenger.name = name
+            passenger.save()
+        new_booking = Booking.objects.create(passenger=passenger,flight=f)
+
+        return redirect('confirmation' , booking_code = new_booking.booking_code)
+    return render(request,'flights/booking.html' , context_error)
+
+
 
 
 def confirmation(request,booking_code):
-    booking = get_object_or_404(Booking,booking_code=booking_code)
-    return render(request,"flights/confirmation.html",{"booking":booking})
+    book = get_object_or_404(Booking,booking_code=booking_code)
+    return render(request,"flights/confirmation.html",{"booking":book})
 
 def airport(request,code):
     airport = get_object_or_404(Airport,code=code)
     departures = airport.departures.select_related("destination").all()
     arrivals = airport.arrivals.select_related("origin").all()
-    return render(request,"flights/airport.html",{"airport":airport,"departures":departures,"arrivals":arrivals})
+    return render(request,"flights/airport.html",{"airport":airport,"code":airport.code,"departures":departures,"arrivals":arrivals})
 
 def managebook(request):
     booking = None
@@ -68,3 +99,16 @@ def cancel_booking(request,booking_code):
 
 def succeed(request):
     return render(request,'flights/succeed.html')
+
+
+
+
+
+
+def special(request):
+    flights = Flight.objects.filter(destination__city="Dubai")
+    return render(request,'flights/specific.html',{"data":flights})
+
+
+
+
